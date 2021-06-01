@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import Hrms.HrmsProject.bussines.abstarcts.JobTitleService;
 import Hrms.HrmsProject.core.utilities.result.DataResult;
+import Hrms.HrmsProject.core.utilities.result.ErrorDataResult;
 import Hrms.HrmsProject.core.utilities.result.ErrorResult;
 import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.core.utilities.result.SuccesDataResult;
@@ -25,13 +26,17 @@ public class JobTitleManager implements JobTitleService {
 
 	@Override
 	public DataResult<List<JobTitle>> getall() {
-
-		return new SuccesDataResult<List<JobTitle>>(this.joTitleDao.findAll(),"Veriler Listelendi");
+		/*
+		 * if (!this.joTitleDao.getByIsActive()) { return new
+		 * ErrorDataResult<List<JobTitle>>("Aktif iş ilanı yok"); }
+		 */
+		return new SuccesDataResult<List<JobTitle>>(this.joTitleDao.findAll(), "Veriler Listelendi");
+		
 	}
 
 	@Override
 	public Result add(JobTitle jobTitle) {
-		if (this.joTitleDao.getByJobName(jobTitle.getJobName())!=null) {
+		if (this.joTitleDao.getByJobName(jobTitle.getJobName()) != null) {
 			return new ErrorResult("İş adı zaten kayıtlııı");
 		}
 

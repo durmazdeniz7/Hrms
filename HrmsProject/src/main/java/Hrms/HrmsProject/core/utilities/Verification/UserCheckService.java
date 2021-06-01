@@ -1,9 +1,9 @@
 package Hrms.HrmsProject.core.utilities.Verification;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 
 public interface UserCheckService {
-	boolean isVerified(String nationaltyId,String name,String lastName,LocalDate dateOfBirth);
+	boolean isVerified(String nationaltyId,String name,String lastName,Date dateOfBirth);
 
 }

@@ -5,50 +5,44 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Employers")
-public class Employer {
+@Table(name = "employers")
+public class Employer extends User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 
-	@Column(name = "companyName")
+	@Column(name = "company_name")
 	private String companyName;
 
-	@Column(name = "website")
-	private String website;
+	@Column(name = "web_site")
+	private String webSite;
 
-	@Column(name = "email")
-	private String email;
-
-	@Column(name = "phoneNumber")
+	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	@Column(name = "password")
-	private String password;
-
-	@Column(name = "passwordAgain")
-	private String passwordAgain;
-
+	@ManyToOne()
+	@JoinColumn(name = "job_id")
+	private JobTitle jobTitle;
+	
 	public Employer() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employer(int id, String companyName, String website, String email, String phoneNumber, String password,
-			String passwordAgain) {
+	public Employer(int id, String companyName, String webSite, String phoneNumber, JobTitle jobTitle) {
 		super();
 		this.id = id;
 		this.companyName = companyName;
-		this.website = website;
-		this.email = email;
+		this.webSite = webSite;
 		this.phoneNumber = phoneNumber;
-		this.password = password;
-		this.passwordAgain = passwordAgain;
+		this.jobTitle = jobTitle;
 	}
-
 	public int getId() {
 		return id;
 	}
@@ -65,20 +59,12 @@ public class Employer {
 		this.companyName = companyName;
 	}
 
-	public String getWebsite() {
-		return website;
+	public String getWebSite() {
+		return webSite;
 	}
 
-	public void setWebsite(String website) {
-		this.website = website;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setWebSite(String webSite) {
+		this.webSite = webSite;
 	}
 
 	public String getPhoneNumber() {
@@ -89,20 +75,14 @@ public class Employer {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public String getPassword() {
-		return password;
+	public JobTitle getJobTitle() {
+		return jobTitle;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setJobTitle(JobTitle jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 
-	public String getPasswordAgain() {
-		return passwordAgain;
-	}
-
-	public void setPasswordAgain(String passwordAgain) {
-		this.passwordAgain = passwordAgain;
-	}
+	
 
 }
