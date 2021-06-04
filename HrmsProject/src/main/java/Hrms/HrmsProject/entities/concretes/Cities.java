@@ -8,16 +8,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity 
-@Table(name = "Cities")
+@Table(name = "cities")
 public class Cities {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
-	@Column(name = "cityName")
-	private String cityName;
-
+	@Column(name = "city_name")
+	private String cityName; 
+	
+public Cities(){
+	
+}
 	public Cities(int id, String cityName) {
 		super();
 		this.id = id;

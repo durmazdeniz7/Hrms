@@ -15,7 +15,7 @@ public class Employer extends User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "user_id")
 	private int id;
 
 	@Column(name = "company_name")
@@ -27,6 +27,7 @@ public class Employer extends User {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 
+	
 	@ManyToOne()
 	@JoinColumn(name = "job_id")
 	private JobTitle jobTitle;

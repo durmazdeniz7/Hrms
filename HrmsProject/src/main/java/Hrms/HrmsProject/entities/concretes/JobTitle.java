@@ -37,6 +37,12 @@ public class JobTitle {
 	@Column(name = "last_date")
 	private Date lastDate;
 
+	@Column(name = "open_position")
+	private int openPosition;
+
+	@Column(name = "open_date")
+	private Date openDate;
+
 	@OneToMany(mappedBy = "id")
 	List<Employer> employers;
 
@@ -45,7 +51,7 @@ public class JobTitle {
 	}
 
 	public JobTitle(int id, String jobName, String jobDetails, boolean isActive, int minSalary, int maxSalary,
-			List<Employer> employers, Date lastDate) {
+			List<Employer> employers, Date lastDate, int openPosition, Date openDate) {
 		super();
 		this.id = id;
 		this.jobName = jobName;
@@ -55,6 +61,8 @@ public class JobTitle {
 		this.maxSalary = maxSalary;
 		this.employers = employers;
 		this.lastDate = lastDate;
+		this.openPosition = openPosition;
+		this.openDate = openDate;
 	}
 
 	public int getId() {
@@ -121,4 +129,19 @@ public class JobTitle {
 		this.lastDate = lastDate;
 	}
 
+	public int getOpenPosition() {
+		return openPosition;
+	}
+
+	public void setOpenPosition(int openPosition) {
+		this.openPosition = openPosition;
+	}
+
+	public Date getOpenDate() {
+		return openDate;
+	}
+
+	public void setOpenDate(Date openDate) {
+		this.openDate = openDate;
+	}
 }

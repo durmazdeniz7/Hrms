@@ -12,6 +12,7 @@ import Hrms.HrmsProject.bussines.abstarcts.JobTitleService;
 import Hrms.HrmsProject.core.utilities.result.DataResult;
 import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.entities.concretes.JobTitle;
+import Hrms.HrmsProject.entities.concretes.Dtos.JobTitleWithEmployer;
 
 @RestController
 @RequestMapping("/api/jobtitle")
@@ -32,5 +33,5 @@ public class JobTitleControllers {
 	public Result add(@RequestBody JobTitle jobTitle) {
 		return this.jobTitleService.add(jobTitle);
 	}
-
+	
 }

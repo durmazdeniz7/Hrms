@@ -14,6 +14,7 @@ import Hrms.HrmsProject.core.utilities.result.SuccesDataResult;
 import Hrms.HrmsProject.core.utilities.result.SuccesResult;
 import Hrms.HrmsProject.dataAcces.abstracts.JobTitleDao;
 import Hrms.HrmsProject.entities.concretes.JobTitle;
+import Hrms.HrmsProject.entities.concretes.Dtos.JobTitleWithEmployer;
 
 @Service
 public class JobTitleManager implements JobTitleService {
@@ -43,5 +44,7 @@ public class JobTitleManager implements JobTitleService {
 		this.joTitleDao.save(jobTitle);
 		return new SuccesResult("Başarılı bir şekilde kaydedildi");
 	}
+
+	
 
 }

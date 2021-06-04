@@ -1,12 +1,16 @@
 package Hrms.HrmsProject.entities.concretes;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -17,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Candidate extends User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "user_id")
 	private int id;
 
 	@Column(name = "first_name")
@@ -31,18 +35,24 @@ public class Candidate extends User {
 
 	@Column(name = "date_of_birth")
 	private Date dateOfBirth;
+	
+	
+	@OneToMany(mappedBy = "id")
+	List<CvTable> cvtables;
 
 	public Candidate() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Candidate(int id, String firstName, String lastName, String nationaltyId, Date dateOfBirth) {
+	public Candidate(int id, String firstName, String lastName, String nationaltyId, Date dateOfBirth,
+			List<CvTable> cvtable) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.nationaltyId = nationaltyId;
 		this.dateOfBirth = dateOfBirth;
+		this.cvtables = cvtable;
 	}
 
 	public int getId() {
@@ -83,6 +93,14 @@ public class Candidate extends User {
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public List<CvTable> getCvtables() {
+		return cvtables;
+	}
+
+	public void setCvtables(List<CvTable> cvtables) {
+		this.cvtables = cvtables;
 	}
 
 }
