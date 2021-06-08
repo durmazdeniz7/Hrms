@@ -1,106 +1,46 @@
 package Hrms.HrmsProject.entities.concretes;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+@Data
+@EqualsAndHashCode(callSuper=false)
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "candidates")
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class Candidate extends User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id")
-	private int id;
+@PrimaryKeyJoinColumn(name = "user_id")
+public class Candidate extends User{
 
-	@Column(name = "first_name")
+	
+	@Column(name = "first_name",nullable = false)
+	@NotBlank
 	private String firstName;
-
-	@Column(name = "last_name")
+	
+	@Column(name = "last_name",nullable = false)
+	@NotBlank
 	private String lastName;
-
-	@Column(name = "nationalty_id")
+	
+	@Column(name = "nationalty_id",nullable = false)
+	@NotBlank
 	private String nationaltyId;
-
-	@Column(name = "date_of_birth")
+	
+	
+	@Column(name = "date_of_birth",nullable = false)
+	@NotBlank
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date dateOfBirth;
 	
-	
-	@OneToMany(mappedBy = "id")
-	List<CvTable> cvtables;
-
-	public Candidate() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Candidate(int id, String firstName, String lastName, String nationaltyId, Date dateOfBirth,
-			List<CvTable> cvtable) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.nationaltyId = nationaltyId;
-		this.dateOfBirth = dateOfBirth;
-		this.cvtables = cvtable;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getNationaltyId() {
-		return nationaltyId;
-	}
-
-	public void setNationaltyId(String nationaltyId) {
-		this.nationaltyId = nationaltyId;
-	}
-
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public List<CvTable> getCvtables() {
-		return cvtables;
-	}
-
-	public void setCvtables(List<CvTable> cvtables) {
-		this.cvtables = cvtables;
-	}
 
 }

@@ -1,5 +1,7 @@
 package Hrms.HrmsProject.entities.concretes;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,71 +12,49 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+
 public class User {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id",nullable = false)
+
 	private int id;
 
-	@Email(message = "Email formatı doğru değil")
-	@NotBlank(message = "Mail alanı boş olamaz")
-	@Column(name = "email")
+	@Column(name = "email",nullable = false)
+	@Email
+	@NotBlank
+
 	private String email;
 
-	@NotBlank(message="Şifre Alanı Boş olamaz")
-	@Size(min=6, max=16, message="Şifre en az 6, en fazla 16 karakterden oluşabilir")
-	@Column(name = "password")
+	@Column(name = "password",nullable = false)
 	private String password;
 
-	@Column(name = "is_active")
-	private boolean isActive;
+	@Column(name = "password_repeat",nullable = false)
+	private String passwordRepeat;
 
-	public User() {
-		super();
-	}
+	/*
+	 * @Column(name = "created_at", columnDefinition = "Date defult CURRENT_DATE")
+	 * private LocalDate createdAt = LocalDate.now();
+	 * 
+	 * @Column(name = "is_active", columnDefinition = "boolean default true")
+	 * private boolean isActive = true;
+	 * 
+	 * @Column(name = "is_deleted", columnDefinition = "boolean default false")
+	 * private boolean isDeleted = false;
+	 */
+	
 
-	public User(int id, String email, String password, boolean isActive) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.password = password;
-		this.isActive = isActive;
-	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
 }

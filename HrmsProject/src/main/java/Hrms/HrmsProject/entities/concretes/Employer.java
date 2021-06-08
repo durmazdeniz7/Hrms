@@ -1,89 +1,59 @@
 package Hrms.HrmsProject.entities.concretes;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+@Data
+@EqualsAndHashCode(callSuper=false)
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "employers")
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Employer extends User {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id")
-	private int id;
-
-	@Column(name = "company_name")
+	
+	
+	
+	@Column(name = "company_name",nullable = false)
+	@NotBlank
 	private String companyName;
-
-	@Column(name = "web_site")
+	
+	@Column(name = "web_site",nullable = false)
+	@NotBlank
 	private String webSite;
-
-	@Column(name = "phone_number")
+	
+	@Column(name = "phone_number",nullable = false)
+	@NotBlank
 	private String phoneNumber;
 
 	
+	 @ManyToOne()
+	 @JoinColumn(name  = "jobPosition_id")
+	private  JobPosition jobPosition;
+	
+
+	@OneToMany(mappedBy = "employer")
+	private List<JobPosting> jobPostings;
+	  
 	@ManyToOne()
-	@JoinColumn(name = "job_id")
-	private JobTitle jobTitle;
+	@JoinColumn(name = "cities_id")
+	private Cities cities;
 	
-	public Employer() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Employer(int id, String companyName, String webSite, String phoneNumber, JobTitle jobTitle) {
-		super();
-		this.id = id;
-		this.companyName = companyName;
-		this.webSite = webSite;
-		this.phoneNumber = phoneNumber;
-		this.jobTitle = jobTitle;
-	}
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public String getWebSite() {
-		return webSite;
-	}
-
-	public void setWebSite(String webSite) {
-		this.webSite = webSite;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public JobTitle getJobTitle() {
-		return jobTitle;
-	}
-
-	public void setJobTitle(JobTitle jobTitle) {
-		this.jobTitle = jobTitle;
-	}
-
 	
+	
+	
+	 
 
 }

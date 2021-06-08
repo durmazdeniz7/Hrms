@@ -13,25 +13,23 @@ import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.entities.concretes.Candidate;
 
 @RestController
-@RequestMapping("api/candidate")
+@RequestMapping("api/candidatecontrollers")
 public class CandidateControllers {
-
 	private CandidateService candidateService;
 
 	@Autowired
 	public CandidateControllers(CandidateService candidateService) {
-
+		super();
 		this.candidateService = candidateService;
 	}
 
-	@RequestMapping("/getall")
-	public DataResult<List<Candidate>> getall() {
-		return this.candidateService.getall();
-	}
-
 	@PostMapping("/add")
-	public Result add(Candidate candidate) {
+	Result add(Candidate candidate) {
 		return this.candidateService.add(candidate);
+	}
+	@RequestMapping("/getall")
+	public DataResult<List<Candidate>> getall(){
+		return this.candidateService.getall();
 	}
 
 }

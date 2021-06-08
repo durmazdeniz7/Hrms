@@ -1,46 +1,41 @@
 package Hrms.HrmsProject.entities.concretes;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Table(name = "cities")
 public class Cities {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", nullable = false)
 	private int id;
+
+	@Column(name = "city_name", nullable = false)
+	private String cityName;
+
+	/*
+	 * @OneToMany(mappedBy = "cities") List<JobPosting> jobPostings;
+	 */
+
 	
-	@Column(name = "city_name")
-	private String cityName; 
-	
-public Cities(){
-	
-}
-	public Cities(int id, String cityName) {
-		super();
-		this.id = id;
-		this.cityName = cityName;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getCityName() {
-		return cityName;
-	}
-
-	public void setCityName(String cityName) {
-		this.cityName = cityName;
-	}
+	@OneToMany(mappedBy = "cities")
+	private List<Employer> employers;
 
 }

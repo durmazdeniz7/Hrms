@@ -18,23 +18,16 @@ import Hrms.HrmsProject.entities.concretes.Candidate;
 
 @Service
 public class CandidateManager implements CandidateService {
-
-	private CandidateDao candidateDao;
 	private UserCheckService userCheckService;
 	private EmailSender emailSender;
+	private CandidateDao candidateDao;
 
 	@Autowired
-	public CandidateManager(CandidateDao candidateDao, UserCheckService userCheckService, EmailSender emailSender) {
-		// TODO Auto-generated constructor stub
-		this.candidateDao = candidateDao;
+	public CandidateManager(UserCheckService userCheckService, EmailSender emailSender, CandidateDao candidateDao) {
+		super();
 		this.userCheckService = userCheckService;
 		this.emailSender = emailSender;
-	}
-
-	@Override
-	public DataResult<List<Candidate>> getall() {
-
-		return new SuccesDataResult<List<Candidate>>(this.candidateDao.findAll(), "İş arayanlar listelendi...");
+		this.candidateDao = candidateDao;
 	}
 
 	@Override
@@ -42,17 +35,35 @@ public class CandidateManager implements CandidateService {
 		if (!this.userCheckService.isVerified(candidate.getNationaltyId(), candidate.getFirstName(),
 				candidate.getLastName(), candidate.getDateOfBirth())) {
 			return new ErrorResult("Kullanıcı Doğrulanamadı");
-		}
-		if (this.candidateDao.getByEmail(candidate.getEmail()) != null) {
-			return new ErrorResult("Daha önce bu mail ile kayıt olundu");
-		}
-		if (this.candidateDao.getByNationaltyId(candidate.getNationaltyId()) != null) {
-			return  new ErrorResult("Tc kimlik Numarası Zaten kayıtlı");
 
 		}
-		this.emailSender.sendMailVerified(candidate.getEmail(), "DOğrulama kodu");
+		if (this.getByEmail(candidate.getEmail())!=null) {
+			return new ErrorResult("Email zaten kayıtlı");
+		}
+		if (this.getByNationaltyId(candidate.getNationaltyId())!=null) {
+			return new ErrorResult("Tc zaten kayıtlı");
+		}
+		this.emailSender.sendMailVerified(candidate.getEmail(), "kod");
 		this.candidateDao.save(candidate);
-		return new SuccesResult("İş arayan kaydedildi");
+		return new SuccesResult("Kullanıcı Eklendi");
+	}
+
+	@Override
+	public Candidate getByNationaltyId(String nationaltyId) {
+		// TODO Auto-generated method stub
+		return this.candidateDao.getByNationaltyId(nationaltyId);
+	}
+
+	@Override
+	public Candidate getByEmail(String email) {
+		// TODO Auto-generated method stub
+		return this.getByNationaltyId(email);
+	}
+
+	@Override
+	public DataResult<List<Candidate>> getall() {
+		// TODO Auto-generated method stub
+		return new SuccesDataResult<List<Candidate>>(this.candidateDao.findAll());
 	}
 
 }
