@@ -1,9 +1,11 @@
 package Hrms.HrmsProject.entities.concretes;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -42,5 +44,20 @@ public class Candidate extends User{
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date dateOfBirth;
 	
+	@OneToMany(mappedBy = "candidate")
+	private List<CvTable> cvTables;
+	
+	
+	@OneToMany(mappedBy = "candidate")
+	private List<School> schools;
 
+	@OneToMany(mappedBy = "candidate")
+	private List<JobExperience> jobExperiences;
+	
+	@OneToMany(mappedBy = "candidate")
+	private List<ForeginLanguage> foreginLanguages;
+	
+	@OneToMany(mappedBy = "candidate")
+	private List<ProgramingLanguage> programingLanguages;
+	
 }
