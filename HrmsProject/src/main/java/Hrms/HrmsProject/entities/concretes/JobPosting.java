@@ -1,65 +1,64 @@
 package Hrms.HrmsProject.entities.concretes;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.core.sym.Name;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-@Data
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
 @Entity
-@NoArgsConstructor
+@Table(name = "job_posting")
+@Data
 @AllArgsConstructor
-@Table(name = "job_postings")
+@NoArgsConstructor
 public class JobPosting {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",nullable = false)
+    private int id;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
+    @Column(name = "job_descriptions",nullable = false)
+    @NotBlank
+    private String jobDescription;
 
-	@Column(name = "description", nullable = false)
-	private String description;
 
-	@Column(name = "salary_min")
-	private int salaryMin;
+    @Column(name = "min_salary")
+    private int minSalary;
 
-	@Column(name = "salary_max")
-	private int salaryMax;
+    @Column(name = "max_salary")
+    private int maxSalary;
 
-	@Column(name = "open_positions")
-	private int openPositions;
+    @Column(name = "open_position",nullable = false)
+    private int openPosition;
 
-	@Column(name = "deadline")
-	private LocalDate deadline;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "publishing_date",nullable = false)
+    private Date publishingDate;
 
-	@Column(name = "published_at")
-	private LocalDate publishedAt;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "end_apply_date",nullable = false)
+    private Date endApplyDate;
 
-	@Column(name = "created_at")
-	private LocalDate createdAt;
+    @Column(name = "is_active",nullable = false)
+    private boolean isActive;
 
-	@Column(name = "is_open")
-	private boolean isOpen;
+    @ManyToOne()
+    @JoinColumn(name = "jobPosition_id")
+    private JobPosition jobPosition;
 
-	@Column(name = "is_active")
-	private boolean isActive;
+    @ManyToOne()
+    @JoinColumn(name = "cities_id")
+    private Cities cities;
 
-	@Column(name = "is_deleted")
-	private boolean isDeleted;
+    @ManyToOne()
+    @JoinColumn(name = "employer_id", nullable = false, updatable = false)
+    private Employer employer;
 
-	@ManyToOne()
-	@JoinColumn(name = "employer_id")
-	private Employer employer;
+
 }

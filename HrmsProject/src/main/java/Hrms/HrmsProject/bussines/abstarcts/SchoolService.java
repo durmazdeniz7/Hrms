@@ -7,7 +7,8 @@ import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.entities.concretes.School;
 
 public interface SchoolService {
-	Result add(School school);
-	DataResult<List<School>> getall();
+	 Result add(School school);
+	    DataResult<List<School>> getall();
+	    DataResult<List<School>> getallSorted();
 
 }

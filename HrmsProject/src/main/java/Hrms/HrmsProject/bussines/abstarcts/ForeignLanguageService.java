@@ -4,9 +4,9 @@ import java.util.List;
 
 import Hrms.HrmsProject.core.utilities.result.DataResult;
 import Hrms.HrmsProject.core.utilities.result.Result;
-import Hrms.HrmsProject.entities.concretes.ForeginLanguage;
+import Hrms.HrmsProject.entities.concretes.ForeignLanguage;
 
 public interface ForeignLanguageService {
-	Result add(ForeginLanguage foreginLanguage);
-	DataResult<List<ForeginLanguage>> getall();
+	  Result add(ForeignLanguage foreignLanguage);
+	    DataResult<List<ForeignLanguage>> getall();
 }

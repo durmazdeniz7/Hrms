@@ -7,12 +7,12 @@ import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.entities.concretes.Candidate;
 
 public interface CandidateService {
-	Result add(Candidate candidate);
+	Candidate findByEmail(String email);
 
-	DataResult<List<Candidate>> getall();
+    Candidate findByIdentityNumber(String identityNumber);
 
-	Candidate getByNationaltyId(String nationaltyId);
+    Result add(Candidate candidate);
 
-	Candidate getByEmail(String email);
-
+    DataResult<List<Candidate>> getall();
+    DataResult<List<Candidate>> getByCandidateName(String firstName);
 }

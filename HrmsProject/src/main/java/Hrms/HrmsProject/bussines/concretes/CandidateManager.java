@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import Hrms.HrmsProject.bussines.abstarcts.CandidateService;
 import Hrms.HrmsProject.core.utilities.Verification.UserCheckService;
-import Hrms.HrmsProject.core.utilities.mail.EmailSender;
+import Hrms.HrmsProject.core.utilities.mail.EmailService;
 import Hrms.HrmsProject.core.utilities.result.DataResult;
 import Hrms.HrmsProject.core.utilities.result.ErrorResult;
 import Hrms.HrmsProject.core.utilities.result.Result;
@@ -18,52 +18,53 @@ import Hrms.HrmsProject.entities.concretes.Candidate;
 
 @Service
 public class CandidateManager implements CandidateService {
-	private UserCheckService userCheckService;
-	private EmailSender emailSender;
-	private CandidateDao candidateDao;
+	  private CandidateDao candidateDao;
+	    private UserCheckService userCheckService;
+	   private EmailService emailService;
 
-	@Autowired
-	public CandidateManager(UserCheckService userCheckService, EmailSender emailSender, CandidateDao candidateDao) {
-		super();
-		this.userCheckService = userCheckService;
-		this.emailSender = emailSender;
-		this.candidateDao = candidateDao;
-	}
 
-	@Override
-	public Result add(Candidate candidate) {
-		if (!this.userCheckService.isVerified(candidate.getNationaltyId(), candidate.getFirstName(),
-				candidate.getLastName(), candidate.getDateOfBirth())) {
-			return new ErrorResult("Kullanıcı Doğrulanamadı");
+	    @Autowired
+	    public CandidateManager(CandidateDao candidateDao, UserCheckService userCheckService, EmailService emailService) {
+	        this.candidateDao = candidateDao;
+	        this.userCheckService = userCheckService;
+	        this.emailService = emailService;
+	    }
 
-		}
-		if (this.getByEmail(candidate.getEmail())!=null) {
-			return new ErrorResult("Email zaten kayıtlı");
-		}
-		if (this.getByNationaltyId(candidate.getNationaltyId())!=null) {
-			return new ErrorResult("Tc zaten kayıtlı");
-		}
-		this.emailSender.sendMailVerified(candidate.getEmail(), "kod");
-		this.candidateDao.save(candidate);
-		return new SuccesResult("Kullanıcı Eklendi");
-	}
 
-	@Override
-	public Candidate getByNationaltyId(String nationaltyId) {
-		// TODO Auto-generated method stub
-		return this.candidateDao.getByNationaltyId(nationaltyId);
-	}
+	    @Override
+	    public Candidate findByEmail(String email) {
+	        return this.candidateDao.findByEmail(email);
+	    }
 
-	@Override
-	public Candidate getByEmail(String email) {
-		// TODO Auto-generated method stub
-		return this.getByNationaltyId(email);
-	}
+	    @Override
+	    public Candidate findByIdentityNumber(String identityNumber) {
+	        return this.candidateDao.findByIdentityNumber(identityNumber);
+	    }
 
-	@Override
-	public DataResult<List<Candidate>> getall() {
-		// TODO Auto-generated method stub
-		return new SuccesDataResult<List<Candidate>>(this.candidateDao.findAll());
-	}
+	    @Override
+	    public Result add(Candidate candidate) {
+	        if (this.findByEmail(candidate.getEmail()) != null) {
+	            return new ErrorResult("Daha önce kayıtlı email var");
+	        }
+	        if (this.findByIdentityNumber(candidate.getIdentityNumber())!=null){
+	            return new ErrorResult("Aynı TC KİMLİK NUMARASI VAR");
+	        }
+	        if(!userCheckService.isVerified(candidate)){
+	            return new ErrorResult("Kullanıcı Doğrulanamadı");
+	        }
+	        this.emailService.sendMailVerified(candidate.getEmail(),"123456");
+	        this.candidateDao.save(candidate);
+	        return new SuccesResult("Eklendi");
+	    }
 
+	    @Override
+	    public DataResult<List<Candidate>> getall() {
+	        return new SuccesDataResult<List<Candidate>>(this.candidateDao.findAll(),"Listelendi");
+	    }
+
+	    @Override
+	    public DataResult<List<Candidate>> getByCandidateName(String firstName) {
+
+	        return new SuccesDataResult<>(this.candidateDao.getByCandidateName(firstName));
+	    }
 }

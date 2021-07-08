@@ -11,29 +11,25 @@ import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.core.utilities.result.SuccesDataResult;
 import Hrms.HrmsProject.core.utilities.result.SuccesResult;
 import Hrms.HrmsProject.dataAcces.abstracts.ForeignLanguageDao;
-import Hrms.HrmsProject.entities.concretes.ForeginLanguage;
+import Hrms.HrmsProject.entities.concretes.ForeignLanguage;
 
 @Service
 public class ForeignLanguageManager implements ForeignLanguageService {
-	private ForeignLanguageDao foreignLanguageDao;
+    private ForeignLanguageDao foreignLanguageDao;
 
-	@Autowired
-	public ForeignLanguageManager(ForeignLanguageDao foreignLanguageDao) {
-		super();
-		this.foreignLanguageDao = foreignLanguageDao;
-	}
+    @Autowired
+    public ForeignLanguageManager(ForeignLanguageDao foreignLanguageDao) {
+        this.foreignLanguageDao = foreignLanguageDao;
+    }
 
-	@Override
-	public Result add(ForeginLanguage foreginLanguage) {
-		this.foreignLanguageDao.save(foreginLanguage);
-		return new SuccesResult("Yabancı Dil Eklendi");
-	}
+    @Override
+    public Result add(ForeignLanguage foreignLanguage) {
+        this.foreignLanguageDao.save(foreignLanguage);
+        return new SuccesResult("Ekledni");
+    }
 
-	@Override
-	public DataResult<List<ForeginLanguage>> getall() {
-		// TODO Auto-generated method stub
-		return new SuccesDataResult<List<ForeginLanguage>>(this.foreignLanguageDao.findAll(),
-				"Yabancı Diller Listelendi");
-	}
-
+    @Override
+    public DataResult<List<ForeignLanguage>> getall() {
+        return new SuccesDataResult<List<ForeignLanguage>>(this.foreignLanguageDao.findAll(),"Listelendi");
+    }
 }

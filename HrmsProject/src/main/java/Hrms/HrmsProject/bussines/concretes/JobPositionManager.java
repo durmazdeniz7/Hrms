@@ -16,34 +16,31 @@ import Hrms.HrmsProject.entities.concretes.JobPosition;
 
 @Service
 public class JobPositionManager implements JobPositionService {
-	private JobPositionDao jobPositionDao;
+private JobPositionDao jobPositionDao;
 
-	@Autowired
-	public JobPositionManager(JobPositionDao jobPositionDao) {
-		super();
-		this.jobPositionDao = jobPositionDao;
-	}
+@Autowired
+    public JobPositionManager(JobPositionDao jobPositionDao) {
+        this.jobPositionDao = jobPositionDao;
+    }
 
-	@Override
-	public Result add(JobPosition jobPosition) {
 
-		if (this.getByJobName(jobPosition.getJobName())!=null) {
-			return new ErrorResult("Aynı isimde iş pozisyonu var");
-		}
-		this.jobPositionDao.save(jobPosition);
-		return  new SuccesResult("İş pozisyonu eklendi");
-	}
+    @Override
+    public JobPosition findByJobName(String jobName) {
+        return this.jobPositionDao.findByJobName(jobName);
+    }
 
-	@Override
-	public DataResult<List<JobPosition>> getall() {
-		// TODO Auto-generated method stub
-		return new SuccesDataResult<List<JobPosition>>(this.jobPositionDao.findAll(),"Sistemde kki genel iş pozisyonları listelendi");
-	}
+    @Override
+    public Result add(JobPosition jobPosition) {
+    if (this.findByJobName(jobPosition.getJobName())!=null){
 
-	@Override
-	public JobPosition getByJobName(String jobName) {
-		// TODO Auto-generated method stub
-		return this.jobPositionDao.getByJobName(jobName);
-	}
+        return  new ErrorResult("Aynı isimde iş Pozisyonu var");
+    }
+    this.jobPositionDao.save(jobPosition);
+        return new SuccesResult("İş pozisyonu Eklendi");
+    }
 
+    @Override
+    public DataResult<List<JobPosition>> getall() {
+        return new SuccesDataResult<List<JobPosition>>(this.jobPositionDao.findAll(),"İş pozisyonları listelendi");
+    }
 }

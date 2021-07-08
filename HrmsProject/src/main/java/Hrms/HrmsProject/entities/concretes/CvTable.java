@@ -1,50 +1,61 @@
 package Hrms.HrmsProject.entities.concretes;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "cv_tables")
+@Table(name = "cv_table")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CvTable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-	@Column(name = "photo_link")
-	private String photoLink;
+    @Column(name = "photo_link")
+    private String photoLink;
 
-	@Column(name = "github_link")
-	private String githubLink;
+    @Column(name = "github_link")
+    private String githubLink;
 
-	@Column(name = "linkedin_link")
-	private String linkedinLink;
+    @Column(name = "linedin_link")
+    private String linkedinLink;
 
-	@Column(name = "description")
-	private String description;
+    @Column(name = "description", nullable = false)
+    private String description;
 
-	@Column(name = "created_date", nullable = false)
-	private LocalDate createdDate;
 
-	@Column(name = "is_active", nullable = false)
-	private boolean isActive;
+    @Column(name = "create_date", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date createDate;
 
-	@ManyToOne()
-	@JoinColumn(name = "candidate_id")
-	private Candidate candidate;
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
+    @ManyToOne()
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
+
+    @OneToMany(mappedBy = "cvTable")
+    private List<School> schools;
+
+    @OneToMany(mappedBy = "cvTable")
+    private List<JobExperiment> jobExperiments;
+
+    @OneToMany(mappedBy = "cvTable")
+    private List<ForeignLanguage> foreignLanguages;
+
+    @OneToMany(mappedBy = "cvTable")
+    private List<ProgrammingLanguage> programmingLanguages;
+
 }

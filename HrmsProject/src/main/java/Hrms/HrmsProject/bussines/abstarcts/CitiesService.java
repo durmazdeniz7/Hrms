@@ -6,6 +6,6 @@ import Hrms.HrmsProject.core.utilities.result.DataResult;
 import Hrms.HrmsProject.entities.concretes.Cities;
 
 public interface CitiesService {
-	DataResult<List<Cities>> getall();
+    DataResult<List<Cities>> getall();
 
 }

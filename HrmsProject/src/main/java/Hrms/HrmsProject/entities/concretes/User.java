@@ -1,21 +1,13 @@
 package Hrms.HrmsProject.entities.concretes;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -23,38 +15,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id",nullable = false)
+    private  int id;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id",nullable = false)
+    @Column(name = "email")
+    @Email(message = "Lütfen email formatında giriniz")
+    @NotBlank
+    private  String email;
 
-	private int id;
+    @Column(name = "password")
+    @NotBlank
+    @Size(min = 8,max = 32)
+    private  String password;
 
-	@Column(name = "email",nullable = false)
-	@Email
-	@NotBlank
+    @Column(name = "password_repeat")
+    @NotBlank
+    @Size(min = 8,max = 32)
+    private  String passwordRepeat;
 
-	private String email;
-
-	@Column(name = "password",nullable = false)
-	private String password;
-
-	@Column(name = "password_repeat",nullable = false)
-	private String passwordRepeat;
-
-	/*
-	 * @Column(name = "created_at", columnDefinition = "Date defult CURRENT_DATE")
-	 * private LocalDate createdAt = LocalDate.now();
-	 * 
-	 * @Column(name = "is_active", columnDefinition = "boolean default true")
-	 * private boolean isActive = true;
-	 * 
-	 * @Column(name = "is_deleted", columnDefinition = "boolean default false")
-	 * private boolean isDeleted = false;
-	 */
-	
-
+    @Column(name = "email_valid",nullable = false)
+    private boolean emailValid;
 
 }

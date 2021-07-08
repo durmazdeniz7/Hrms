@@ -1,45 +1,55 @@
 package Hrms.HrmsProject.entities.concretes;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
+@Entity
+@Table(name = "schools")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "schools")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","School"})
 public class School {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
 
-	@Column(name = "school_name")
-	private String schoolName;
-	
-	@Column(name = "department")
-	private String department;
-	
-	@Column(name = "start_date")
-	private LocalDate startDate;
-	
-	@Column(name = "end_date")
-	private LocalDate endDate;
-	
-	
-	@ManyToOne()
-	@JoinColumn(name = "candidate_id")
-	private Candidate candidate;
-	
+    @Column(name = "school_name",nullable = false)
+    @NotBlank
+    private String schoolName;
+
+    @Column(name = "department",nullable = false)
+    private String department;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "start_date",nullable = false)
+    private Date startDate;
+
+
+    @Column(name = "end_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date endDate;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @JsonBackReference
+    @ManyToOne()
+    @JoinColumn(name = "cvTable_id")
+    private CvTable cvTable;
+
 }

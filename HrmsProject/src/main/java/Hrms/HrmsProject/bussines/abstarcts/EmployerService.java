@@ -7,11 +7,9 @@ import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.entities.concretes.Employer;
 
 public interface EmployerService {
-	Employer getByEmail(String email);
-
-	DataResult<List<Employer>> getall();
-
-	Result add(Employer employer);
+	 Employer findByEmail(String email);
+	    Result add(Employer employer);
+	    DataResult<List<Employer>> getall();
 	
 	
 }
