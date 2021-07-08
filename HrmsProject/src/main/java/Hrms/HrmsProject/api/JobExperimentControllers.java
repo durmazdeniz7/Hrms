@@ -11,6 +11,7 @@ import Hrms.HrmsProject.core.utilities.result.DataResult;
 import Hrms.HrmsProject.core.utilities.result.Result;
 import Hrms.HrmsProject.entities.concretes.JobExperiment;
 
+
 @RestController
 @RequestMapping("/api/jobexperiment")
 public class JobExperimentControllers {
